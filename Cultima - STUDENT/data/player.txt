@@ -1,0 +1,59 @@
+1897
+Birocir   **name
+-1 -1 -1     **mapMark
+0 0 0 0 0 0 0 0 0     **potions
+0 0 0 0 0     **flowerBoxCount
+0 0 0 0      **specificExperience
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0      **stats
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0      **infoIndexes
+0 0 0 0     **spellHotKeys
+-1 -1 -1 -1 -1 -1 -1 -1 -1     **potionHotKeys
+0 0 0 0 0 0 0 0     **weaponHotKeys
+[]     **effects
+[images/characters/player/dualaxe1.Gif, images/characters/player/dualaxe2.Gif, images/characters/player/dualaxe3.Gif, images/characters/player/dualaxe4.Gif]   **images
+[]     **item:itemFrequency
+[]     **spells
+[]   **teleporter-memory
+[Clothes:1]  **armor:armorFrequency
+[Fists:1]   **weapon:weaponFrequency for unarmed
+[]   **weapon:weaponFrequency for torch
+[]   **weapon:weaponFrequency for magic staff
+[]   **weapon:weaponFrequency for longstaff
+[]   **weapon:weaponFrequency for spears
+[]   **weapon:weaponFrequency for bows
+[]   **weapon:weaponFrequency for crossbows
+[]   **weapon:weaponFrequency for axes
+[Dualaxe:1]   **weapon:weaponFrequency for dual-axes
+[]   **weapon:weaponFrequency for hammers
+[]   **weapon:weaponFrequency for daggers
+[]   **weapon:weaponFrequency for swords
+[]   **weapon:weaponFrequency for sword and shield
+[]   **weapon:weaponFrequency for dual blades
+[]   **weapon:weaponFrequency for lute
+8     **imageIndex
+8     **startStoryIndex
+0   **mapIndex
+698   **row
+675   **column
+500   **world-row
+500   **world-column
+world     **locationType
+12     **might
+10     **mind
+26     **agility
+64     **body
+100     **manna
+0    **awareness
+0   **reputation
+1   **bounty
+10   **gold
+183   **experience
+500     **experienceToLevelUp
+0     **weaponSelect
+0     **armorSelect
+5   **rations
+0     **numArrows
+none     **dogBasicInfo
+none     **horseBasicInfo
+1     **days
+9.0     ***time
