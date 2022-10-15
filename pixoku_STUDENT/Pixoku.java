@@ -176,18 +176,19 @@ public class Pixoku extends JPanel implements MouseListener, MouseMotionListener
 //			grid is to remain unchanged
    public static int [][] invert(int [][] grid)
    {
-      for(int r = 0; r < grid.length; r ++) {
-         for(int c = 0; c < grid[r].length; c++) {
+      int[][] result = new int[grid.length][grid[0].length];
+      for(int r = 0; r < result.length; r ++) {
+         for(int c = 0; c < result[r].length; c++) {
             if(grid[r][c] == 0) {
-               grid[r][c] = 1;
+               result[r][c] = 1;
             }
             else {
-               grid[r][c] = 0;
+               result[r][c] = 0;
             }
          }
       
       }
-      return grid;	//temporary statement to keep things compiling
+      return result;	//temporary statement to keep things compiling
    }
 
 //*****COMPLETE THIS METHOD********
@@ -199,16 +200,20 @@ public class Pixoku extends JPanel implements MouseListener, MouseMotionListener
    public static int [][] mirrorFlip(int [][] grid)
    {
       int[][] result = new int[grid.length][grid[0].length];
-      for(int r = 0; r < grid.length; r ++) {
-         for(int c = 0; c < grid[r].length; c++) {
-            for(int x = 0; x < grid.length; x++) {
-               if(grid[r][c] == 0) {
-                  grid[r][c] = 1;
-               }
-               else {
-                  grid[r][c] = 0;
-               }
-            }
+      for(int r = 0; r < grid.length; r++) {
+         for(int c = 0; c < grid[0].length; c++) {
+            result[r][c] = grid[r][c];
+         }
+      }
+      for(int r = 0; r < result.length; r ++) {
+         int start = 0;
+         int end = result[0].length - 1;
+         while(start < end) {
+            int temp = result[r][start];
+            result[r][start] = result[r][end];
+            result[r][end] = temp;
+            start++;
+            end--;
          }
       }
       return result;	//temporary statement to keep things compiling
@@ -225,7 +230,26 @@ public class Pixoku extends JPanel implements MouseListener, MouseMotionListener
 //      the data field hint will have the correct value for the number of unused hints when the method is called
    private static boolean checkForWin()
    {
-      return false;	//temporary statement to keep things compiling
+      boolean ans = true;
+      for(int r = 0; r < board.length; r++) {
+         for(int c = 0; c < board[0].length; c++) {
+            if(board[r][c] == 1 && (guess[r][c] == 1 || guess[r][c] == -1)) {
+               score++;
+            }
+            else if(board[r][c] == 1 && (guess[r][c] == 0 || guess[r][c] == 2 || guess[r][c] == 3)) {
+               numErrors++;
+               ans = false;
+               break;
+            }
+            else if(board[r][c] == 0 && (guess[r][c] == 1 || guess[r][c] == -1)) {
+               numErrors++;
+               ans = false;
+               break;
+            } 
+         }
+      }
+      score = score - (numErrors * 2) + (hint * 2);
+      return ans;	//temporary statement to keep things compiling
    }
 
    //NOTE:  only called in MethodTester.java to see if checkForWin works properly
