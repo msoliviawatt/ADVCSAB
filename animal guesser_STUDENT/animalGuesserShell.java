@@ -80,12 +80,73 @@ public class animalGuesserShell
    {
       return (ans.toLowerCase().equals("yes") || ans.toLowerCase().equals("y"));
    }
+
+   public static String[] increaseArrayLength(String[] x) {
+      String[] result = new String[x.length * 2];
+      for(int i = 0; i < x.length; i++) {
+         result[i] = x[i];
+      }
+      return result;
+   }
    
    public static void main(String argv[])throws IOException
    {
       Scanner input = new Scanner(System.in);
-      	
-      
-      
+      int play = 1;
+      boolean helper = true;
+      String [] questions = readFile("animal.txt");
+      while(play == 1) {
+         System.out.println("Welcome!" + "\n" + "Think of an animal :D");
+         int i = 1;
+         String ans = "";
+         while(i < questions.length) {
+            if(questions[i].equals(null) || questions[i].equals("null")) {
+               break;
+            }
+            System.out.print(questions[i] + "\n");
+            ans = input.nextLine();
+            if(isNo(ans)) {
+               i *= 2;
+               helper = true;
+            }
+            else if(isYes(ans)) {
+               i = i * 2 + 1;
+               helper = false;            }
+            else {
+               System.out.println("Please enter 'yes' or 'no'");
+            }
+         }
+
+         if(helper) {
+            i/=2;
+         }
+         else {
+            i = i / 2 - 1;
+         }
+         String newAnimal = "";
+         String newQuestion = "";
+         String guessedAnimal = questions[i].substring(questions[i].indexOf("a"), questions[i].length() - 1);
+         if(isNo(ans)) {
+            System.out.println("Sad! What animal were you thinking of?: ");
+            newAnimal = input.nextLine();
+            System.out.println("What is a question that is true for " + newAnimal + " and false for " + guessedAnimal + "?");
+            newQuestion = input.nextLine();
+            questions = increaseArrayLength(questions);
+            questions[i] = newQuestion;
+            questions[i * 2] = "Is it a(n) " + guessedAnimal + "?";
+            questions[i * 2 + 1] = "Is it a(n) " + newAnimal + "?";
+         }
+         else if(isYes(ans)) {
+            System.out.println("Yay! I guessed your animal!");
+         }
+         System.out.println("Enter '1' to play again or '0' to quit");
+         play = input.nextInt();
+         while(play != 1 && play != 0) {
+            System.out.println("Please enter 1 or 0");
+         }
+      }
+      System.out.println("Bye!");
+      writeToFile(questions, "animal.txt");
+      input.close();
    } 
 }
