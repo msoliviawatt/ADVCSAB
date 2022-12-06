@@ -20,7 +20,6 @@ import java.util.*;
          for(int i = 0; i < key.length; i++) {
             translator.put(key[i], value[i]);
          }
-
          return translator;
       }
 }

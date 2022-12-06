@@ -84,7 +84,7 @@
             }
          }
 
-         //decode
+         //decode 
          else if(encordec.equals("decode") || encordec.equals("d")) { //if the user chooses to decode
             System.out.println("Would you like to decode from a file? (y/n)"); {
                String ans = input.nextLine();
