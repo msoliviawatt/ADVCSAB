@@ -1,7 +1,20 @@
-957
+67
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 **missionsGiven
 ******************Mission 0
 Main     **type
+none     **startStory
+none     **middleStory
+none     **endStory
+(-1,-1)     **(worldRow,worldCol)
+0     **goldReward
+null     **itemReward
+none     **clearLocation
+null     **target
+none     **targetHolder
+(-1,-1)     **(targetRow,targetCol)
+false     **failed
+******************Mission 1
+Curse     **type
 none     **startStory
 none     **middleStory
 none     **endStory

@@ -1,4 +1,4 @@
-import javax.swing.ImageIcon;
+import javax.swing.ImageIcon; 
 import java.util.ArrayList;
 public class AnimatedEntity
 {
