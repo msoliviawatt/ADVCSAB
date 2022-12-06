@@ -100,7 +100,7 @@ WRITE THE METHODS BELOW
 //post:  will return a map whose keySet is comprised of all the unique pirate words
 //			and whose values are ArrayLists of all the english words that mapped to that particular pirate word.
 //i.e.   one such Map element might have a key of "ahoy" and a value ["hello", "hi", "greetings"]
-//			another element might have the key "there" and the value ["thar"] 
+//			another element might have the key "there" and the value ["thar"]
 
    public Map<String, ArrayList<String>> flip()
    {

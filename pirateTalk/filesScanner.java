@@ -2,7 +2,7 @@
    import java.util.*;
  //this will show you functions to help read in text from a file and store it
  //into an array of Strings - d.oberle
-    public class filesScanner
+    public class filesScanner 
    {
       //pre:  "fileName" is the name of a real file containing lines of text
       //post: returns the number of lines in fileName

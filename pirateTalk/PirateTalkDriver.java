@@ -25,7 +25,7 @@ public class PirateTalkDriver
          System.out.print(translator.getWord(words[i])+ " ");
       System.out.println("!!!");	
       
-   	//******TO TEST THE flip() METHOD*********//
+   	//******TO TEST THE flip() METHOD*********// 
       System.out.println(translator.flip());
    }
 
