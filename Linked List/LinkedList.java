@@ -2,18 +2,23 @@
 
    public class LinkedList<anyType> implements ListInterface<anyType>
    {
-      private ListNode<anyType> head;		//refers to the first element
+      private ListNode<anyType> head, tail;		//refers to the first element
+      private int size;
    
       public LinkedList()						//constructor
       {
          head = null;
+         tail = null;
+         size = 0;
       }
    
    //WRITE THIS METHOD***********************************************
    //post:  returns true of the list is empty
       public boolean isEmpty()
-      
       {
+         if(head == null) {
+            return true;
+         }
          return false;							//temporary code to keep the file compiling
       }
    //****************************************************************
@@ -23,21 +28,36 @@
    //post: adds x to the front of the list
       public void addFirst(anyType x)				
       {
-      
-      }
+         ListNode list = new ListNode<anyType>(x);
+         list.setNext(head);
+         
+         if(head != null) {
+            head.setPrev(list);
+         }
+         head = list;
+         if(tail == null) {
+            tail = list;
+         }
+         if(head != null) {
+            head.setPrev(tail);
+         }
+         tail.setNext(head);
+         head.setPrev(tail);
+         size++;
+;      }
    //****************************************************************
    
    //post:  adds x to the end of the list, O(n)
       public void addLast(anyType x)
       {
          if (head==null)										//if list is empty
-            head = new ListNode(x,null);					//head refers to the only node
+            head = new ListNode(x,null, null);					//head refers to the only node
          else
          {
             ListNode current = head;
             while(current.getNext()!= null)				//make current go to the last element
                current = current.getNext();
-            current.setNext(new ListNode(x, null));	//make the last element's next become a new ending node
+            current.setNext(new ListNode(x, null, null));	//make the last element's next become a new ending node
          }
       }
    
@@ -55,8 +75,10 @@
    //post: returns the lastNode's value - returns null if the pre-conditon fails
       public anyType getLast()
       {
-      
-         return null;						//temporary code to keep the file compiling
+         if(head == null) {
+            return null;
+         }
+         return tail.getValue();						//temporary code to keep the file compiling
       }
    //****************************************************************
    
@@ -67,7 +89,6 @@
    //      returns null if the pre-condition fails
       public anyType removeFirst() 
       {
-      
          return null;						//temporary code to keep the file compiling
       }
    //****************************************************************
