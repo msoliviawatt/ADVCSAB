@@ -12,53 +12,48 @@
          size = 0;
       }
    
-   //WRITE THIS METHOD***********************************************
    //post:  returns true of the list is empty
       public boolean isEmpty()
       {
          if(head == null) {
             return true;
          }
-         return false;							//temporary code to keep the file compiling
+         return false;						
       }
-   //****************************************************************
-   
-   
-   //WRITE THIS METHOD***********************************************
+
    //post: adds x to the front of the list
       public void addFirst(anyType x)				
       {
-         ListNode list = new ListNode<anyType>(x);
-         list.setNext(head);
+         ListNode node = new ListNode<anyType>(x);
          
-         if(head != null) {
-            head.setPrev(list);
+         if(this.isEmpty()) {
+            head = node;
+            tail = node;
          }
-         head = list;
-         if(tail == null) {
-            tail = list;
+         else {
+            head.setPrev(node);
+            node.setNext(head);
+            head = node;
          }
-         if(head != null) {
-            head.setPrev(tail);
-         }
-         tail.setNext(head);
-         head.setPrev(tail);
          size++;
-;      }
-   //****************************************************************
+      }
    
    //post:  adds x to the end of the list, O(n)
       public void addLast(anyType x)
       {
-         if (head==null)										//if list is empty
-            head = new ListNode(x,null, null);					//head refers to the only node
+         ListNode node = new ListNode<anyType>(x);
+
+         if(this.isEmpty()) {
+            head = node;
+            tail = node;
+         }
          else
          {
-            ListNode current = head;
-            while(current.getNext()!= null)				//make current go to the last element
-               current = current.getNext();
-            current.setNext(new ListNode(x, null, null));	//make the last element's next become a new ending node
+            node.setPrev(tail);
+            tail.setNext(node);
+            tail = node;
          }
+         size++;
       }
    
    //pre:  the head is not null
@@ -66,11 +61,10 @@
       public anyType getFirst()
       {
          if (head==null)							//if list is empty
-            return null;							//this is our flag for an unsuccessful add
+            return null;						
          return head.getValue();
       }
    
-   //WRITE THIS METHOD***********************************************
    //pre:  the list is not empty
    //post: returns the lastNode's value - returns null if the pre-conditon fails
       public anyType getLast()
@@ -78,56 +72,73 @@
          if(head == null) {
             return null;
          }
-         return tail.getValue();						//temporary code to keep the file compiling
+         return tail.getValue();						
       }
-   //****************************************************************
    
-   
-   //WRITE THIS METHOD***********************************************
    //pre:  the head is not null
    //post: removes the first element from the list and returns its value
    //      returns null if the pre-condition fails
       public anyType removeFirst() 
       {
-         return null;						//temporary code to keep the file compiling
+         if(this.isEmpty()) {
+            return null;
+         }
+         anyType ans = head.getValue();
+         head = head.getNext();
+         size--;
+         return ans;
       }
-   //****************************************************************
    
    //pre:  the head is not null
    //post: removes the last element from the list and returns its value, O(n) 
    //      returns null if the pre-condition fails
       public anyType removeLast()
       {
-         if (head==null)											//if list is empty
+         if (this.isEmpty()) {
             return null;
-         anyType temp = getLast();
-         if (head.getNext() == null)							//only one element in the list
-            head = null;
-         else
-         {
-            ListNode current = head;							//current will traverse the list
-            while(current.getNext().getNext() != null)	//move current to the second to last node
-               current=current.getNext();
-            current.setNext(null);								//then cap off the end of the new, smaller list with null
-         }	
-         return temp;
+         }
+         if(size <= 0) {
+            return null;
+         }
+         try  {
+            anyType ans = tail.getValue();
+            if(size > 1) {
+               tail = tail.getPrev();
+            }
+            else {
+               this.remove(0);
+            }
+            size--;
+            return ans;
+         } catch (Exception e) {
+            System.out.println(e);
+            return null;
+         }
+         
       }
    
-   //WRITE THIS METHOD***********************************************
    //post: returns the number of elements
       public int size()
       {
-      
-         return 0;							//temporary code to keep the file compiling
+         return size;
       }
-   //****************************************************************
    
    //WRITE THIS METHOD***********************************************
    //pre: index >=0 and index < size()
    //post: returns the object at a specific index (first element is index 0)
       public anyType get(int index)		
       {
-      
+         if(this.isEmpty()) {
+            return null;
+         }
+         if(index == 0) {
+            return head.getValue();
+         }
+         else if(index == size  - 1) {
+            return tail.getValue();
+         }
+         else {
+         }
          return null;						//temporary code to keep the file compiling
       }	
    //****************************************************************	
@@ -164,7 +175,9 @@
    //post: removes and returns the object at a specific index (first element is index 0)
       public anyType remove(int index)		
       {
-      
+         if(this.isEmpty()) {
+            return null;
+         }
          return null;						//temporary code to keep the file compiling
       }	
    //****************************************************************	
