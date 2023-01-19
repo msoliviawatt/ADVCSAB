@@ -97,18 +97,16 @@
          if (this.isEmpty()) {
             return null;
          }
-         if(size <= 0) {
-            return null;
-         }
          try  {
             anyType ans = tail.getValue();
             if(size > 1) {
                tail = tail.getPrev();
+               tail.setNext(null);
+               size--;
             }
             else {
                this.remove(0);
             }
-            size--;
             return ans;
          } catch (Exception e) {
             System.out.println(e);
@@ -123,7 +121,6 @@
          return size;
       }
    
-   //WRITE THIS METHOD***********************************************
    //pre: index >=0 and index < size()
    //post: returns the object at a specific index (first element is index 0)
       public anyType get(int index)		
@@ -138,18 +135,29 @@
             return tail.getValue();
          }
          else {
+            ListNode<anyType> current = head;
+            for(int i = 0; i < index; i++) {
+               current = current.getNext();
+            }
+            return current.getValue();
          }
-         return null;						//temporary code to keep the file compiling
       }	
-   //****************************************************************	
    
    //WRITE THIS METHOD***********************************************
    //pre:  index >=0 and index < size()
    //post: changes the element at a specific index to x, returning the element that was originally there
       public anyType set(int index, anyType x)
       {
-      
-         return null;						//temporary code to keep the file compiling
+         if(this.isEmpty()) {
+            return null;
+         }
+         ListNode<anyType> current = head;
+         for(int i = 0; i < index; i++) {
+            current = current.getNext();
+         }
+         anyType oldValue = current.getValue();
+         current.setValue(x);
+         return oldValue;
       }	
    //****************************************************************
    
@@ -160,17 +168,35 @@
          return true;			
       }	
    
-   //WRITE THIS METHOD***********************************************
    //pre:  index >=0 and index < size()
    //post: adds element x at index i, returns true if successful
       public boolean add(int index, anyType x)
       {
-      
+         if(this.isEmpty()) {
+            return false;
+         }
+         if(index == 0) {
+            addFirst(x);
+         }
+         if(index == size) {
+            addLast(x);
+            return true;
+         }
+
+         ListNode<anyType> current = head;
+         for(int i = 1; i < index; i++) {
+            if(current != null) {
+               current = current.getNext();
+            }
+         }
+         ListNode temp = new ListNode<anyType>(x);
+         temp.setNext(current.getNext());
+         temp.setPrev(current);
+         current.setNext(temp);
+         size++;
          return true;			
       }	
-   //****************************************************************
    
-   //WRITE THIS METHOD***********************************************
    //pre: index >=0 and index < size()
    //post: removes and returns the object at a specific index (first element is index 0)
       public anyType remove(int index)		
@@ -178,9 +204,24 @@
          if(this.isEmpty()) {
             return null;
          }
-         return null;						//temporary code to keep the file compiling
+         if(index == 0) {
+            return this.removeFirst();
+         }
+         else if(index == size  - 1) {
+            return this.removeLast();
+         }
+         else {
+            ListNode<anyType> current = head;
+            for(int i = 0; i < index; i++) {
+               current = current.getNext();
+            }
+            anyType ans = current.getValue();
+            current.getPrev().setNext(current.getNext());
+            current.getNext().setPrev(current.getPrev());
+            size--;
+            return ans;
+         }					
       }	
-   //****************************************************************	
    
    //post: returns all elements of the list as a String 
    //in the form [a0, a1, a2, . . . , an-1],  O(n)
