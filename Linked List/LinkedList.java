@@ -128,22 +128,21 @@
          if(this.isEmpty()) {
             return null;
          }
-         if(index == 0) {
-            return head.getValue();
-         }
-         else if(index == size  - 1) {
-            return tail.getValue();
-         }
-         else {
-            ListNode<anyType> current = head;
+         ListNode<anyType> current;
+         if(index < size / 2) {
+            current = head;
             for(int i = 0; i < index; i++) {
                current = current.getNext();
             }
-            return current.getValue();
+         } else {
+            current = tail;
+            for (int i = size - 1; i > index; i--) {
+               current = current.getPrev();
+            }
          }
+         return current.getValue();
       }	
    
-   //WRITE THIS METHOD***********************************************
    //pre:  index >=0 and index < size()
    //post: changes the element at a specific index to x, returning the element that was originally there
       public anyType set(int index, anyType x)
@@ -159,7 +158,6 @@
          current.setValue(x);
          return oldValue;
       }	
-   //****************************************************************
    
    //post: adds element x to the end of the list, returns true if successful
       public boolean add(anyType x)
