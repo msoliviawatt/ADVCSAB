@@ -1,4 +1,3 @@
-//Rev. Dr. Douglas R Oberle - Nicholas Hodgman 2015
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;

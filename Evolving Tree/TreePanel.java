@@ -1,4 +1,3 @@
-//Rev. Dr. Douglas R Oberle - Nicholas Hodgman 2015
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -44,9 +43,20 @@ public class TreePanel extends JPanel
    private static void advanceGeneration()
    {
       numGenerations++;
-   //***COMPLETE THE CODE HERE*****************************************
+      int fitIndex = 0;
+      for(int i = 0; i < forest.length; i++) {
+         if(forest[i].compareTo(forest[fitIndex]) > 0)  {
+            fitIndex =  i;
+         }
+      }
 
-   //******************************************************************/
+      for(int i = 0; i < forest.length; i++) {
+         if(i == 0) {
+            forest[i] = forest[fitIndex];
+         } else {
+            forest[i] = forest[fitIndex].mutate(MUTATION_RATE);
+         }
+      }
    }
 
    private class Listener implements ActionListener
@@ -151,7 +161,10 @@ public class TreePanel extends JPanel
                return;
             SAMPLE_SIZE--;    
          //***COMPLETE THE CODE HERE*****************************************
-         
+         forest[0] = forest[0].makeRandomTree();
+         for(int i = 1; i < forest.length; i++) {
+            forest[i] = forest[0];
+         }
          //******************************************************************/
             repaint();
             return;
@@ -162,7 +175,10 @@ public class TreePanel extends JPanel
                return;
             SAMPLE_SIZE++;
          //***COMPLETE THE CODE HERE*****************************************
-         
+         forest[0] = forest[0].makeRandomTree();
+         for(int i = 1; i < forest.length; i++) {
+            forest[i] = forest[0];
+         }
          //******************************************************************/
             repaint();
             return;
