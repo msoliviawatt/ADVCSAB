@@ -11,7 +11,6 @@ public class Tree
    
    //pre: root points to an in-order Binary Search Tree
    //post:adds x to the tree such that the tree is still an in-order Binary Search Tree
-   
    public void add(Comparable x)
    {
       myRoot = addHelper(myRoot, x);
@@ -19,16 +18,18 @@ public class Tree
    
    private TreeNode addHelper(TreeNode root, Comparable x)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   
-   //************************************************************           
+      if(root == null) {
+         return new TreeNode(x);
+      } else if(x.compareTo(root.getValue()) < 0){
+         root.setLeft(addHelper(root.getLeft(), x));
+      } else if(x.compareTo(root.getValue()) > 0) {
+         root.setRight(addHelper(root.getRight(), x));
+      }
       return root;
    }
    
    //pre: root points to an in-order Binary Search Tree
    //post:removes x from the tree such that the tree is still an in-order Binary Search Tree
-   
    public void remove(Comparable x)
    {
       myRoot = removeHelper(myRoot, x);
@@ -36,32 +37,52 @@ public class Tree
    
    private TreeNode removeHelper(TreeNode root, Comparable x)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************           
+      if(root == null) {
+         return null;
+      } else if (x.compareTo(root.getValue()) < 0) {
+         root.setLeft(removeHelper(root.getLeft(), x));
+      } else if (x.compareTo(root.getValue()) > 0) {
+         root.setRight(removeHelper(root.getRight(), x));
+      } else {
+         if(isLeaf(root)) {
+            root = null;
+         } else if(oneKid(root)) {
+            if(root.getLeft() != null) {
+               root = root.getLeft();
+            } else {
+               root = root.getRight();
+            }
+         } else {
+            TreeNode child = root.getRight();
+            while(child.getLeft() != null) {
+               child = child.getLeft();
+            }
+            root.setValue(child.getValue());
+            root.setRight(removeHelper(root.getRight(), child.getValue()));
+         }
+      }
       return root;
    }
    
    //pre: root points to an in-order Binary Search Tree
    //post:shows the elements of the tree such that they are displayed in prefix order
-   
    public void showPreOrder()
    {
       preOrderHelper(myRoot);
       System.out.println();
-      
    }
    
    private void preOrderHelper(TreeNode root)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************  
+      if(root != null) {
+         System.out.println(root.getValue() + " ");
+         preOrderHelper(root.getLeft());
+         preOrderHelper(root.getRight());;
+      }
    }
    
    //pre: root points to an in-order Binary Search Tree
    //post:shows the elements of the tree such that they are displayed in infix order
-   
    public void showInOrder()
    {
       inOrderHelper(myRoot);
@@ -80,7 +101,6 @@ public class Tree
       
    //pre: root points to an in-order Binary Search Tree
    //post:shows the elements of the tree such that they are displayed in postfix order
-   
    public void showPostOrder()
    {
       postOrderHelper(myRoot);
@@ -90,9 +110,9 @@ public class Tree
    
    private void postOrderHelper(TreeNode root)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************  
+      postOrderHelper(root.getLeft());
+      postOrderHelper(root.getRight());
+      System.out.println(root.getValue() + " ");
    }
    
    //pre: root points to an in-order Binary Search Tree
@@ -118,27 +138,33 @@ public class Tree
    //THIS WILL BE CALLED IN THE METHOD removeRecur
    private TreeNode searchParent(TreeNode root, Comparable x)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************  
+      if(root == null || isLeaf(root)) {
+         return null;
+      } else if ((root.getLeft() != null && root.getLeft().getValue() == x) || (root.getRight() != null && root.getRight().getValue() == x)) {
+         return root;
+      } else  if(x.compareTo(root.getValue()) < 0) {
+         searchParent(root.getLeft(), x);
+      } else {
+         searchParent(root.getRight(), x);
+      }
       return null;
    }
    
    //post: determines if root is a leaf or not O(1)
    private boolean isLeaf(TreeNode root)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************  
+      if(root != null) {
+         return (root.getLeft() == null && root.getRight() == null);
+      }
       return false;
    }
       
    //post: returns true if only one child O(1)
    private boolean oneKid(TreeNode root)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************  
+      if(root != null) {
+         return ((root.getLeft() != null && root.getRight() == null)) || ((root.getRight() != null && root.getLeft() == null));
+      }
       return false;
    }
       
@@ -165,7 +191,6 @@ public class Tree
 
    //pre: root points to an in-order Binary Search Tree
    //post:returns the height (depth) of the tree
-   
    public int heightHelper(TreeNode root)
    {
    //************COMPLETE THIS METHOD*****************************
@@ -177,7 +202,6 @@ public class Tree
    //EXTRA CREDIT
    //pre: root points to an in-order Binary Search Tree
    //post:returns true if p is an ancestor of c, false otherwise
-   
    public boolean isAncestor(TreeNode root, Comparable p, Comparable c)
    {
       return false;
@@ -186,10 +210,8 @@ public class Tree
    //EXTRA CREDIT
    //pre: root points to an in-order Binary Search Tree
    //post:shows all elements of the tree at a particular depth
-   
    public void printLevel(TreeNode root, int level)
    {
-      
    }
  
   //Nothing to see here...move along.
