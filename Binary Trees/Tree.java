@@ -59,6 +59,7 @@ public class Tree
             }
             root.setValue(child.getValue());
             root.setRight(removeHelper(root.getRight(), child.getValue()));
+            return root;
          }
       }
       return root;
@@ -75,7 +76,7 @@ public class Tree
    private void preOrderHelper(TreeNode root)
    {
       if(root != null) {
-         System.out.println(root.getValue() + " ");
+         System.out.print(root.getValue() + " ");
          preOrderHelper(root.getLeft());
          preOrderHelper(root.getRight());;
       }
@@ -110,9 +111,12 @@ public class Tree
    
    private void postOrderHelper(TreeNode root)
    {
-      postOrderHelper(root.getLeft());
-      postOrderHelper(root.getRight());
-      System.out.println(root.getValue() + " ");
+      if(root != null) {
+         postOrderHelper(root.getLeft());
+         postOrderHelper(root.getRight());
+         System.out.print(root.getValue() + " ");
+      }
+      
    }
    
    //pre: root points to an in-order Binary Search Tree
@@ -127,10 +131,14 @@ public class Tree
    
    private TreeNode searchHelper(TreeNode root, Comparable x)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************  
-      return null;
+      if(root == null) {
+         return null;
+      } else if(x.compareTo(root.getValue()) < 0) {
+         searchHelper(root.getLeft(), x);
+      } else if(x.compareTo(root.getValue()) > 0) {
+         searchHelper(root.getRight(), x);
+      }
+      return root;
    }
    
    //pre: root points to an in-order Binary Search Tree
@@ -178,10 +186,12 @@ public class Tree
    
    private int sizeHelper(TreeNode root)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************  
-      return 0;
+      if(root == null) {
+         return 0;
+      }
+      int left = sizeHelper(root.getLeft());
+      int right = sizeHelper(root.getRight());
+      return 1 + left + right;
    }
          
    public int height()
@@ -193,10 +203,12 @@ public class Tree
    //post:returns the height (depth) of the tree
    public int heightHelper(TreeNode root)
    {
-   //************COMPLETE THIS METHOD*****************************
-   
-   //************************************************************  
-      return 0;
+      if(root == null) {
+         return -1;
+      }
+      int left = heightHelper(root.getLeft());
+      int right = heightHelper(root.getRight());
+      return 1 + Math.max(left, right);
    }
    
    //EXTRA CREDIT
