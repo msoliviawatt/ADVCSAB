@@ -106,7 +106,6 @@ public class Tree
    {
       postOrderHelper(myRoot);
       System.out.println();
-      
    }
    
    private void postOrderHelper(TreeNode root)
@@ -216,7 +215,16 @@ public class Tree
    //post:returns true if p is an ancestor of c, false otherwise
    public boolean isAncestor(TreeNode root, Comparable p, Comparable c)
    {
-      return false;
+      if(root == null) {
+         return false;
+      }
+      if(p.compareTo(root.getValue()) < 0 && c.compareTo(root.getValue()) < 0) {
+         return isAncestor(root.getLeft(), p, c);
+      } else if(p.compareTo(root.getValue()) > 0 && c.compareTo(root.getValue()) > 0) {
+         return isAncestor(root.getRight(), p, c);
+      } else {
+         return true;
+      }
    }
    
    //EXTRA CREDIT
@@ -224,6 +232,14 @@ public class Tree
    //post:shows all elements of the tree at a particular depth
    public void printLevel(TreeNode root, int level)
    {
+      if(root != null) {
+         if (level == 1) {
+            System.out.print(root.getValue() + " ");
+         } else {
+            printLevel(root.getLeft(), level - 1);
+            printLevel(root.getRight(), level - 1);
+         }
+      }  
    }
  
   //Nothing to see here...move along.
