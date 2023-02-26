@@ -14,17 +14,31 @@
 
        public static void main(String[] args) throws IOException
       {
-      //Ask the user to enter the middle part of the filenames
-      
-      //Open a scanner on the message.filename.txt and another on scheme.filename.txt
-      
-      //Read in the message from the message text file, then you are done with that scanner
-      
-      //Now call the huffmanTree method, passing it the scheme Scanner so it can read
-      //  and construct the tree.
-      
-      //Then pass the encoded message and the root of the tree to dehuff to uncompress
-      //  it.  Print the result of this method.
+         //Ask the user to enter the middle part of the filenames
+         
+         //Open a scanner on the message.filename.txt and another on scheme.filename.txt
+         
+         //Read in the message from the message text file, then you are done with that scanner
+         
+         //Now call the huffmanTree method, passing it the scheme Scanner so it can read
+         //  and construct the tree.
+         
+         //Then pass the encoded message and the root of the tree to dehuff to uncompress
+         //  it.  Print the result of this method.
+         Scanner input = new Scanner(System.in); //creates a scanner for user input
+         System.out.println("Enter the middle part of the file name");
+         String fileName = input.nextLine(); //stores the user input
+         File messageFile = new File("message." + fileName + ".txt"); //creates message file based for fileName
+         File schemeFile = new File("scheme." + fileName + ".txt"); //creates scheme file for fileName
+         Scanner messageScan = new Scanner(messageFile); //message scanner to get the encoded line
+         String encodedMessage = messageScan.nextLine();
+         Scanner schemeScan = new Scanner(schemeFile); //scheme scanner for reading and constructing tree
+         TreeNode root = huffmanTree(schemeScan);
+         System.out.println("Decoded messaage: " + dehuff(encodedMessage, root)); //prints the decoded message
+         //closing scanners because I don't like getting warnings about them not being closed
+         input.close();
+         messageScan.close();
+         schemeScan.close();
       }
       
       /*
@@ -38,18 +52,43 @@
 
        public static TreeNode huffmanTree(Scanner schemeScan)
       {
-      //Create the root node and save a reference to it (you have to return it at the end)
-      
-      //Let the file reading drive the processing.  Read each line until there are no more lines.
-      
-      //For each line, take off the first letter and save it - it is the actual letter.
-      
-      //Now read the ones and the zeroes.  Keep track of the current node you are on.
-      //  When you find a zero, move to the left.  when you find a one, move right.
-      //  If there is a node there keep going, and if the node is null,
-      //  create a new node with a null VALUE and attach it to the current node.
-      //  When you run out of ones and zeroes in the code, set the current node's value to
-      //    the letter. (This should be the leaf at the end of the code path.)  
+         //Create the root node and save a reference to it (you have to return it at the end)
+         
+         //Let the file reading drive the processing.  Read each line until there are no more lines.
+         
+         //For each line, take off the first letter and save it - it is the actual letter.
+         
+         //Now read the ones and the zeroes.  Keep track of the current node you are on.
+         //  When you find a zero, move to the left.  when you find a one, move right.
+         //  If there is a node there keep going, and if the node is null,
+         //  create a new node with a null VALUE and attach it to the current node.
+         //  When you run out of ones and zeroes in the code, set the current node's value to
+         //    the letter. (This should be the leaf at the end of the code path.)  
+         TreeNode root = new TreeNode(null);
+
+         while(schemeScan.hasNextLine()) {
+            String hi = schemeScan.nextLine();
+            char firstLetter = hi.charAt(0); //stores the first letter of the line
+            String line = hi.substring(1);
+
+            //traverses the tree
+            TreeNode current = root;
+            for(int i = 0; i < line.length(); i++) {
+               if(line.charAt(i) == '0') {
+                  if(current.getLeft() == null) {
+                     current.setLeft(new TreeNode(null)); //attaches a null node to the current node
+                  }
+                  current = current.getLeft();
+               } else if (line.charAt(i) == '1') {
+                  if(current.getRight () == null) {
+                     current.setRight(new TreeNode(null)); //attaches a null node to the current node
+                  }
+                  current = current.getRight();
+               }
+            }
+            current.setValue(firstLetter); //sets the current node's value to the letter
+         }
+         return root;
       }
       
       /*
@@ -71,5 +110,22 @@
          //   the top of the Huffman tree.
          
          // Keep track of the current node you are on and loop through the digits of the message.
+         String decodedMessage = ""; //string to store the... decoded message
+         TreeNode current = root;
+         for(int i = 0; i < text.length(); i++) {
+            //if the character is not a letter, move on
+            if(text.charAt(i) == '0') { 
+               current = current.getLeft();
+            } else {
+               current = current.getRight();
+            }
+
+            //leaf node
+            if(current.getValue() != null) {
+               decodedMessage += current.getValue(); //add to the returned string
+               current = root; //starts over from root
+            }
+         }
+         return decodedMessage;
       }
    }
