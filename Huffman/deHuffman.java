@@ -14,17 +14,19 @@
 
        public static void main(String[] args) throws IOException
       {
-      //Ask the user to enter the middle part of the filenames
-      
-      //Open a scanner on the message.filename.txt and another on scheme.filename.txt
-      
-      //Read in the message from the message text file, then you are done with that scanner
-      
-      //Now call the huffmanTree method, passing it the scheme Scanner so it can read
-      //  and construct the tree.
-      
-      //Then pass the encoded message and the root of the tree to dehuff to uncompress
-      //  it.  Print the result of this method.
+         //Ask the user to enter the middle part of the filenames
+         Scanner input = new Scanner(System.in);
+         System.out.println("Enter a name for the file.");
+         String filename = input.nextLine();
+         //Open a scanner on the message.filename.txt and another on scheme.filename.txt
+         FileReader fileReader = new FileReader("message.filename.txt");
+         FileReader fileReader2 = new FileReader("scheme.filename.txt");
+         //Read in the message from the message text file, then you are done with that scanner
+         //Now call the huffmanTree method, passing it the scheme Scanner so it can read
+         //  and construct the tree.
+         //Then pass the encoded message and the root of the tree to dehuff to uncompress
+         //  it.  Print the result of this method.
+         input.close();
       }
       
       /*
@@ -38,18 +40,19 @@
 
        public static TreeNode huffmanTree(Scanner schemeScan)
       {
-      //Create the root node and save a reference to it (you have to return it at the end)
-      
-      //Let the file reading drive the processing.  Read each line until there are no more lines.
-      
-      //For each line, take off the first letter and save it - it is the actual letter.
-      
-      //Now read the ones and the zeroes.  Keep track of the current node you are on.
-      //  When you find a zero, move to the left.  when you find a one, move right.
-      //  If there is a node there keep going, and if the node is null,
-      //  create a new node with a null VALUE and attach it to the current node.
-      //  When you run out of ones and zeroes in the code, set the current node's value to
-      //    the letter. (This should be the leaf at the end of the code path.)  
+         //Create the root node and save a reference to it (you have to return it at the end)
+         
+         //Let the file reading drive the processing.  Read each line until there are no more lines.
+         
+         //For each line, take off the first letter and save it - it is the actual letter.
+         
+         //Now read the ones and the zeroes.  Keep track of the current node you are on.
+         //  When you find a zero, move to the left.  when you find a one, move right.
+         //  If there is a node there keep going, and if the node is null,
+         //  create a new node with a null VALUE and attach it to the current node.
+         //  When you run out of ones and zeroes in the code, set the current node's value to
+         //    the letter. (This should be the leaf at the end of the code path.)  
+         return null;
       }
       
       /*
@@ -71,5 +74,6 @@
          //   the top of the Huffman tree.
          
          // Keep track of the current node you are on and loop through the digits of the message.
+         return null;
       }
    }
