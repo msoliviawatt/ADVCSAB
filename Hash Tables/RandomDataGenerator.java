@@ -40,7 +40,7 @@ public class RandomDataGenerator {
             FileWriter fileWriter = new FileWriter(fileName);
             for(int i = 0; i < 10000; i++) {
                 DataItem item = randomElement();
-                fileWriter.write(item.getNum() + " " + item.getWord()+"\n");
+                fileWriter.write(item.getNumber() + " " + item.getWord()+"\n");
             }
             fileWriter.close();
         } catch (IOException e) {
