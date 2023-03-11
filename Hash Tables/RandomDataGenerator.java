@@ -1,5 +1,4 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class RandomDataGenerator {
      //generates random character that is a consonant
@@ -17,8 +16,7 @@ public class RandomDataGenerator {
     }
 
     //generates a random data element
-    public static DataItem randomElement() {
-        int num = (int)(Math.random() * 10000); //random number from 0-9999
+    public static DataItem randomElement(int x) {
         String word = "";
         int dataLength = (int)(Math.random() * 6) + 3; //random length
         boolean consonantHelper = true; //keeps track of consonants for alternating with vowels
@@ -32,14 +30,15 @@ public class RandomDataGenerator {
                 consonantHelper = true;
             }
         }
-        return new DataItem(num, word);
+        return new DataItem(x, word);
     }
+    
 
     public static void writeToFile(String fileName) {
         try {
             FileWriter fileWriter = new FileWriter(fileName);
             for(int i = 0; i < 10000; i++) {
-                DataItem item = randomElement();
+                DataItem item = randomElement(i);
                 fileWriter.write(item.getNumber() + " " + item.getWord()+"\n");
             }
             fileWriter.close();

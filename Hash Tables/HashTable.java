@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class HashTable {
 
-    private final int SIZE = 1000; //array size
+    private int size = 1000; //array size
     private Node[] table; //array of binary tree roots
 
     //node class
@@ -22,8 +22,8 @@ public class HashTable {
     //constructor
     //creates a table of size 1000
     public HashTable() {
-        table = new Node[SIZE];
-        for (int i = 0; i < SIZE; i++) {
+        table = new Node[size];
+        for (int i = 0; i < size; i++) {
             table[i] = null;
         } //sets all values to null
     }
@@ -31,32 +31,24 @@ public class HashTable {
     //for adding items to the table
     public void add(DataItem item) {
         int hash = item.hashCode();
-        int index = hash % SIZE;
+        int index = hash % size;
         Node newNode = new Node(item);
-
-        if (table[index] == null) { //if there is no item at that index
-            table[index] = newNode; //add item at that index
+        if (table[index] == null) {
+            table[index] = newNode;
         } else {
-            Node current = table[index];
-            Node parent;
-
-            while (true) {
-                parent = current;
-                if (item.compareTo(current.item) < 0) {
-                    current = current.left;
-                    if (current == null) {
-                        parent.left = newNode;
-                        break;
-                    }
-                } else {
-                    current = current.right;
-                    if (current == null) {
-                        parent.right = newNode;
-                        break;
-                    }
-                }
-            }
+            addHelper(table[index], newNode);
         }
+    }
+
+    private Node addHelper(Node current, Node newNode) {
+        if (current == null) {
+            return newNode;
+        } else if (newNode.item.compareTo(current.item) < 0) {
+            current.left = addHelper(current.left, newNode);
+        } else {
+            current.right = addHelper(current.right, newNode);
+        }
+        return current;
     }
 
     public DataItem get(String word) {
@@ -74,12 +66,13 @@ public class HashTable {
             }
         }
 
-        return null; // item not found
+        return null;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         HashTable hashTable = new HashTable();
-        Scanner scanner = new Scanner(new File("hashData.txt"));
+        File file = new File("hashData.txt");
+        Scanner scanner = new Scanner(file);
 
         while (scanner.hasNextLine()) {
             String[] line = scanner.nextLine().split(" ");
@@ -92,13 +85,21 @@ public class HashTable {
         scanner.close();
 
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter a word to find its associated number: ");
-        String word = input.nextLine();
-        DataItem item = hashTable.get(word);
-        if (item != null) {
-            System.out.println("The number associated with the word \"" + word + "\" is " + item.getNumber());
-        } else {
-            System.out.println("No number associated with the word \"" + word + "\" found.");
+        boolean again = true;
+        while(again) {
+            System.out.print("Enter a word to find its associated number: ");
+            String word = input.nextLine();
+            DataItem item = hashTable.get(word);
+            if (item != null) {
+                System.out.println("The number associated with the word \"" + word + "\" is " + item.getNumber());
+            } else {
+                System.out.println("There is no number associated with \"" + word + "\"");
+            }
+            System.out.println("Enter 'y' to run this again.");
+            String hi = input.nextLine();
+            if(!hi.equalsIgnoreCase("y")) {
+                again = false;
+            }
         }
         input.close();
     }
