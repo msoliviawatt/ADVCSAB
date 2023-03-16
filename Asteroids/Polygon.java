@@ -26,8 +26,8 @@ public class Polygon {
     shape = inShape;
     position = inPosition;
     rotation = inRotation;
-	 myColor = Color.YELLOW;
-	 fill = true;
+    myColor = Color.YELLOW;
+    fill = true;
     wrap = true;
     
     // First, we find the shape's top-most left-most boundary, its origin.

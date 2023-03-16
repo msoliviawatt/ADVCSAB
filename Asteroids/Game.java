@@ -10,7 +10,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class Game extends Canvas {
+public class Game extends Canvas implements KeyListener {
 
   protected boolean on = true;
   protected int width, height;
@@ -105,7 +105,7 @@ public class Game extends Canvas {
     //Update the window and add key listener for ship and timer listener for asteroids
     render();
 	 //PART ONE - UNCOMMENT THE NEXT LINE TO USE THE KEY LISTENER
-    //addKeyListener(this);
+    addKeyListener(this);
     
     //Need timer events to make asteroids move - SEH
     //  Removed calls to render from the keyPress events but needed more frequent rendering by timer
@@ -121,7 +121,27 @@ public class Game extends Canvas {
     requestFocusInWindow();
   }
   
-  
+   //key listener methods
+   public void keyPressed(KeyEvent e) {
+      if(e.getKeyCode() == KeyEvent.VK_UP) {
+         theShip.move(7);
+      }
+      if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+         theShip.move(-7);
+      }
+      if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+         theShip.rotate(-10);
+      }
+      if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+         theShip.rotate(10);
+      }
+   }
+
+   public void keyTyped(KeyEvent e) {
+   }
+
+   public void keyReleased(KeyEvent e) {
+   }
   
 	public void paint(Graphics brush) {
       
