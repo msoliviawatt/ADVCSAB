@@ -27,10 +27,10 @@ public class Game extends Canvas implements KeyListener {
   final static int SCREEN_HEIGHT = 750;
 
   //APCS - Once you have created your Ship class, switch theShip from a Polygon to a Ship variable
-  private Polygon theShip;
-  //private Ship theShip;
+//   private Polygon theShip;
+  private Ship theShip;
   //APCS - Once you have created your Asteroid class, uncomment this section
-  //private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+  private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
   
   private int collisionCt = 0;
   private int newCollisionWith = -1;
@@ -56,13 +56,10 @@ public class Game extends Canvas implements KeyListener {
     //Once you create the Ship class, change this to add a new Ship object to the spaceThings list.
     //The ship is always going to be the first thing in the list.
     //APCS - After you have created your Ship class, change this to create a Ship object, not a Polygon
-	 theShip = new Polygon(newShape, new Point(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), 0);
-    //theShip = new Ship(newShape);
+	//  theShip = new Polygon(newShape, new Point(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), 0);
+    theShip = new Ship(newShape);
         
     Point[] aShape;
-    /* APCS - Uncomment this section when you are ready to create some asteroids (feel free to make changes
-     *   if you want to create your asteroids differently!
-
 
     //Create some asteroids
     for (int i = 0; i < INIT_ASTEROIDS; i++)
@@ -95,11 +92,8 @@ public class Game extends Canvas implements KeyListener {
       //Same for yLoc
       int yLoc = ((int)(Math.random() * (SCREEN_HEIGHT/2 - 109)) + 10) + ((SCREEN_HEIGHT/2 + 110) * ((int)(Math.random() * 2)));
 
-      asteroids.add(new Asteroid(aShape, xLoc, yLoc));
-      
-              
-    }
-*/    
+      asteroids.add(new Asteroid(aShape, xLoc, yLoc));  
+    }  
         // APCS - End of the part to create asteroids
     
     //Update the window and add key listener for ship and timer listener for asteroids
