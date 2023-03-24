@@ -159,9 +159,10 @@ public class Game extends Canvas implements KeyListener {
                asteroids.get(i).move();
                asteroids.get(i).paint(brush);
                if(theShip.collides(asteroids.get(i)) || asteroids.get(i).collides(theShip)) {
+                  theShip.resetPositioin(theShip);
                   lives--;
                   System.out.println("Lives: " + lives);
-                  if(lives == 0) {
+                  if(lives <= 0) {
                      System.out.println("Game Over");
                      System.exit(0);
                   }

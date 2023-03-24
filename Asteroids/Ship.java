@@ -15,6 +15,10 @@ public class Ship extends Polygon {
         super.move(Game.SHIP_SPEED);
     }
 
+    public void resetPositioin(Ship x) {
+        x.position = new Point(Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT/2);
+    }
+
     public void setLives(int l) {
         this.lives = l;
     }
