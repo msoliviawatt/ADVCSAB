@@ -2,13 +2,14 @@ import java.awt.*;
 import java.util.*;
 
 public class Ship extends Polygon {
-    private ArrayList<Missile> missiles = new ArrayList<Missile>();
-    private Color purple = new Color(69, 28, 255);
-    private int lives;
+    private ArrayList<Missile> missiles = new ArrayList<Missile>(); //creates an arraylist of missiles
+    private int lives; //creates a variable for the number of lives
+
+    //constructor
     public Ship(Point[] shape, int l) {
         super(shape, new Point(Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT/2), 0);
         this.lives = l;
-        this.setColor(purple);
+        this.setColor(Color.YELLOW);
     }
 
     //for moving the ship
@@ -27,6 +28,7 @@ public class Ship extends Polygon {
         missiles.add(new Missile(newShape, this.position.x, this.position.y, this.rotation));
     }
 
+    //paints the ship and the missiles
     public void paint(Graphics g) {
         super.paint(g);
         for (Missile m : missiles) {
