@@ -1,7 +1,6 @@
 import java.awt.*;
 
 public class Missile extends Polygon {
-    public static final int MISSILE_SPEED = 9;
 
     public Missile(Point[] shape, double x, double y, double rotation) {
         super(shape, new Point(x, y), rotation);
@@ -10,6 +9,6 @@ public class Missile extends Polygon {
     }
 
     public void move() {
-        super.move(MISSILE_SPEED);
+        super.move(Game.MISSILE_SPEED);
     }
 }

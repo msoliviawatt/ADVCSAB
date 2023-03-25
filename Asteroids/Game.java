@@ -16,19 +16,22 @@ public class Game extends Canvas implements KeyListener {
 
 //Game settings
    final static int INIT_ASTEROIDS = 15;
-   final static int ASTEROID_SPEED = 3;
+   final static int ASTEROID_SPEED = 5;
    final static int SHIP_SPEED = 8;
    final static int ROTATION_SPEED = 5;
    final static int MAX_LIVES = 3;
    final static int FREE_LIFE_THRESHOLD = 3;
-   final static int SCREEN_WIDTH = 1000;
-   final static int SCREEN_HEIGHT = 750;
+   final static int SCREEN_WIDTH = 1600;
+   final static int SCREEN_HEIGHT = 1200;
+   final static int MISSILE_SPEED = 15;
    private boolean up = false;
    private boolean down = false;
    private boolean left = false;
    private boolean right = false;
+   private boolean canFire = false;
    private int lives = 3;
    private Ship theShip;
+   private int asteroidsDestroyed = 0;
    private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
    
    private int collisionCt = 0;
@@ -94,8 +97,9 @@ public class Game extends Canvas implements KeyListener {
       
       //Need timer events to make asteroids move - SEH
       //Removed calls to render from the keyPress events but needed more frequent rendering by timer
-      int delay = 100; //milliseconds - started at 1000 
+      int delay = 50; //milliseconds - started at 1000 
       ActionListener taskPerformer = new ActionListener() { 
+         ArrayList missiles = theShip.getMissiles();
          public void actionPerformed(ActionEvent evt) { 
             //...Perform a task... 
             if(up) {
@@ -109,9 +113,11 @@ public class Game extends Canvas implements KeyListener {
             } else if (right) {
                theShip.rotate(ROTATION_SPEED * 2); 
             }
+            if(canFire) {
+               theShip.fire();
+            }
             render();
          }
-          
       };
       new Timer(delay, taskPerformer).start();
 
@@ -129,7 +135,10 @@ public class Game extends Canvas implements KeyListener {
          }
          if(e.getKeyCode() == KeyEvent.VK_RIGHT) { 
             right = true;
-         }   
+         }
+         if(e.getKeyCode() == KeyEvent.VK_SPACE) { 
+            canFire = true;
+         }
       }
 
       public void keyTyped(KeyEvent e) { } 
@@ -146,14 +155,18 @@ public class Game extends Canvas implements KeyListener {
          }
          if(e.getKeyCode() == KeyEvent.VK_RIGHT) { 
             right = false;
-         }   
+         }
+         if(e.getKeyCode() == KeyEvent.VK_SPACE) { 
+            canFire = false;
+         }
       }
    
       public void paint(Graphics brush) {
-      if (theShip != null)
+         if (theShip != null) {
             theShip.paint(brush);
             for (int i = 0; i < asteroids.size(); i++)
             {
+               ArrayList missiles = theShip.getMissiles();
                if (asteroids.get(i) == null)
                   continue;
                asteroids.get(i).move();
@@ -163,11 +176,25 @@ public class Game extends Canvas implements KeyListener {
                   lives--;
                   System.out.println("Lives: " + lives);
                   if(lives <= 0) {
-                     System.out.println("Game Over");
+                     JOptionPane.showMessageDialog(null, "Out of lives. Game over :(");
                      System.exit(0);
                   }
                }
+               for (int j = 0; j < missiles.size(); j++)
+               {
+                  if (asteroids.get(i).collides((Missile)missiles.get(j)))
+                  {
+                     asteroids.remove(i);
+                     theShip.removeMissile(missiles.get(j));
+                     asteroidsDestroyed++;
+                     break;
+                  }
+               }
             }
+         }
+         brush.setColor(Color.WHITE);
+         brush.drawString("Lives Remaining: " + lives, 10, 20);
+         brush.drawString("Asteroids Destroyed: " + asteroidsDestroyed, 10, 40);
       }
    
          
